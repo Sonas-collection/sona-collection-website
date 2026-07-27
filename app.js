@@ -23,7 +23,16 @@ return searchMatch && categoryMatch;
 });
 
 container.innerHTML = "";
-
+  
+if (filtered.length === 0) {
+    container.innerHTML = `
+        <div style="text-align:center;padding:50px;font-size:20px;">
+            No products found.
+        </div>
+    `;
+    return;
+}
+  
 filtered.forEach(product => {
 
 container.innerHTML += `
