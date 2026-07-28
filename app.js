@@ -41,7 +41,11 @@ container.innerHTML += `
 
 <span class="badge">${product.badge}</span>
 
-<img src="${product.image}" alt="${product.name}">
+<img
+src="${product.image}"
+alt="${product.name}"
+class="product-image"
+data-id="${product.id}">
 
 <div class="product-info">
 
@@ -89,6 +93,15 @@ WhatsApp
 
 displayProducts();
 
+const popup = document.getElementById("product-popup");
+const popupImage = document.getElementById("popup-image");
+const popupName = document.getElementById("popup-name");
+const popupPrice = document.getElementById("popup-price");
+const popupDescription = document.getElementById("popup-description");
+const popupSizes = document.getElementById("popup-sizes");
+const popupWhatsapp = document.getElementById("popup-whatsapp");
+const closePopup = document.querySelector(".close-popup");
+
 search.addEventListener("keyup",displayProducts);
 
 document.querySelectorAll(".filters button").forEach(button=>{
@@ -106,5 +119,47 @@ currentCategory = button.innerText;
 displayProducts();
 
 });
+
+});
+
+document.addEventListener("click", (e) => {
+
+    if (e.target.classList.contains("product-image")) {
+
+        const id = Number(e.target.dataset.id);
+
+        const product = products.find(p => p.id === id);
+
+        popup.classList.add("active");
+
+        popupImage.src = product.image;
+        popupName.innerText = product.name;
+        popupPrice.innerText = product.price;
+        popupDescription.innerText = product.description;
+
+        popupSizes.innerHTML = product.sizes
+            .map(size => `<span>${size}</span>`)
+            .join("");
+
+        popupWhatsapp.href =
+            `https://wa.me/91YOURNUMBER?text=Hi, I want ${encodeURIComponent(product.name)}`;
+
+    }
+
+});
+
+closePopup.addEventListener("click", () => {
+
+    popup.classList.remove("active");
+
+});
+
+popup.addEventListener("click", (e) => {
+
+    if (e.target === popup) {
+
+        popup.classList.remove("active");
+
+    }
 
 });
