@@ -163,3 +163,33 @@ popup.addEventListener("click", (e) => {
     }
 
 });
+
+// ================= COLLECTION CARDS =================
+
+document.querySelectorAll(".collection-card").forEach(card => {
+
+    card.addEventListener("click", () => {
+
+        const title = card.querySelector("h3").innerText;
+
+        currentCategory = title;
+
+        document.querySelectorAll(".filters button").forEach(btn => {
+
+            btn.classList.remove("active");
+
+            if (btn.innerText === title) {
+                btn.classList.add("active");
+            }
+
+        });
+
+        displayProducts();
+
+        document.getElementById("products").scrollIntoView({
+            behavior: "smooth"
+        });
+
+    });
+
+});
